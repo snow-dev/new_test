@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MushroomModule } from './modules/mushroom/mushroom.module';
-import { GenericRepositoryModule } from './modules/generic-repository/generic-repository.module';
 
 @Module({
   imports: [
