@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GenericRepositoryService } from '../domain/generic-repository/generic-repository.service';
+import { GenericAbstractRepository } from '../domain/generic-repository/generic-abstract-repository';
 import { Mushroom } from '../../mushroom/infrastructure/persitence/schemas/mushroom.schema';
 import { MushroomService } from '../../mushroom/domain/mushroom/mushroom.service';
 import { MushroomDto } from '../../mushroom/application/dtos/mushroom.dto';
@@ -7,14 +7,14 @@ import { createMock } from '@golevelup/ts-jest';
 
 describe('GenericRepositoryService', () => {
   let mushroomService: MushroomService;
-  let genericRepository: GenericRepositoryService<Mushroom>;
+  let genericRepository: GenericAbstractRepository<Mushroom>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MushroomService,
         {
-          provide: GenericRepositoryService,
+          provide: GenericAbstractRepository,
           useValue: {
             create: jest.fn(),
             findAll: jest.fn(),
@@ -28,9 +28,9 @@ describe('GenericRepositoryService', () => {
       .useMocker(() => createMock())
       .compile();
 
-    mushroomService = module.get<MushroomService>(GenericRepositoryService);
-    genericRepository = module.get<GenericRepositoryService<Mushroom>>(
-      GenericRepositoryService,
+    mushroomService = module.get<MushroomService>(GenericAbstractRepository);
+    genericRepository = module.get<GenericAbstractRepository<Mushroom>>(
+      GenericAbstractRepository,
     );
   });
 

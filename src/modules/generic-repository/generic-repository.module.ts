@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { GenericRepositoryService } from './domain/generic-repository/generic-repository.service';
+import { GenericAbstractRepository } from './domain/generic-repository/generic-abstract-repository';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Mushroom } from '../mushroom/infrastructure/persitence/schemas/mushroom.schema';
 
 @Module({
-  imports: [GenericRepositoryService],
-  exports: [GenericRepositoryService],
+  exports: [GenericAbstractRepository],
+  imports: [TypeOrmModule.forFeature([Mushroom])],
 })
 export class GenericRepositoryModule {}

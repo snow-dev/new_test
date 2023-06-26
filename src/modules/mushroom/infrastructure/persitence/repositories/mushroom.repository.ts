@@ -1,24 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Mushroom } from '../schemas/mushroom.schema';
-import { Model } from 'mongoose';
+import { GenericAbstractRepository } from '../../../../generic-repository/domain/generic-repository/generic-abstract-repository';
+import { MushroomRepositoryInterface } from '../../../application/mushroom.repository.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
-export class MushroomRepository {
+export class MushroomRepository
+  extends GenericAbstractRepository<Mushroom>
+  implements MushroomRepositoryInterface
+{
   constructor(
-    @InjectModel(Mushroom.name) private mushroomModel: Model<Mushroom>,
-  ) {}
-
-  async create(mushRoomDto: Mushroom): Promise<Mushroom> {
-    const createdMushroom = new this.mushroomModel(mushRoomDto);
-    return createdMushroom.save();
-  }
-
-  async findAll(): Promise<Mushroom[]> {
-    return this.mushroomModel.find().exec();
-  }
-
-  async findById(id: string): Promise<Mushroom> {
-    return this.mushroomModel.findById(id).exec();
+    @InjectRepository(Mushroom)
+    private readonly mushroomRepository: Repository<Mushroom>,
+  ) {
+    super(mushroomRepository);
   }
 }

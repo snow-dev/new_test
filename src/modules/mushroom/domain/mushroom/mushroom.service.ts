@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Mushroom } from '../../infrastructure/persitence/schemas/mushroom.schema';
 import { MushroomDto } from '../../application/dtos/mushroom.dto';
-import { MushroomRepository } from '../../infrastructure/persitence/repositories/mushroom.repository';
-
+import { MushroomRepositoryInterface } from '../../application/mushroom.repository.interface';
 @Injectable()
 export class MushroomService {
-  constructor(private readonly mushroomRepository: MushroomRepository) {}
+  constructor(
+    @Inject('MushroomRepositoryInterface')
+    private readonly mushroomRepository: MushroomRepositoryInterface,
+  ) {}
 
   async create(mushRoomDto: MushroomDto): Promise<Mushroom> {
     try {
@@ -25,7 +27,7 @@ export class MushroomService {
 
   async findById(id: string): Promise<Mushroom> {
     try {
-      return await this.mushroomRepository.findById(id);
+      return await this.mushroomRepository.findById(parseInt(id, 10));
     } catch (err) {
       throw err;
     }
