@@ -1,11 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Schema({ discriminatorKey: 'type' })
+@Schema()
 export class EventSchema {
   @Prop({
     type: String,
     required: true,
-    enum: ['MushroomCreated', 'MushroomUpdated', 'MushroomDeleted'],
   })
   type: string;
 

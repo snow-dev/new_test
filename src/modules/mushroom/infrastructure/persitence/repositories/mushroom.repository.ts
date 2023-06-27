@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Mushroom } from '../schemas/mushroom.schema';
 import { Model } from 'mongoose';
+
+import { Mushroom, MushroomDocument } from '../schemas/mushroom.schema';
 
 @Injectable()
 export class MushroomRepository {
   constructor(
-    @InjectModel(Mushroom.name) private mushroomModel: Model<Mushroom>,
+    @InjectModel(Mushroom.name) private mushroomModel: Model<MushroomDocument>,
   ) {}
 
   async create(mushRoomDto: Mushroom): Promise<Mushroom> {
