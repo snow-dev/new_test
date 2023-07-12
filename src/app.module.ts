@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfigAsync } from './modules/config/ormconfig/ormconfig.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { IndicatorsModule } from './modules/indicators/indicators.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DatabaseModule } from './modules/database/database.module';
     TypeOrmModule.forRootAsync(typeOrmConfigAsync),
     MushroomModule,
     DatabaseModule,
+    IndicatorsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
