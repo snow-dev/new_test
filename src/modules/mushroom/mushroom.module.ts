@@ -23,8 +23,8 @@ import { DatabaseModule } from '../database/database.module';
     ConfigService,
     MushroomService,
     MushroomRepository,
-    CommandBus,
-    QueryBus,
+    // CommandBus,
+    // QueryBus,
   ],
 })
 export class MushroomModule {}
