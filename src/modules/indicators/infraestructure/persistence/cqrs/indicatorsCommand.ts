@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, QueryHandler } from '@nestjs/cqrs';
 import { OrdersModel } from '../models/orders.model';
 import { getCustomRepository } from 'typeorm';
 import { OrderRepository } from '../repositories/order.repository';
@@ -58,6 +58,26 @@ export class IndicatorsHandler implements ICommandHandler<IndicatorsCommand> {
     };
 
     console.log('order: ', order);
+
+    const orders = await this.orderRepository.getOrders();
+
+    console.log('Orders: ', orders);
+
+    return orders;
+  }
+
+  _initializeRepositories() {
+    this.orderRepository = getCustomRepository(OrderRepository);
+  }
+}
+
+export class GetOrdersCommand {}
+
+@QueryHandler(GetOrdersCommand)
+export class GetOrdersQueryHandler implements ICommandHandler<GetOrdersCommand> {
+  private orderRepository: OrderRepository;
+  async execute(command: GetOrdersCommand): Promise<OrdersModel[]> {
+    this._initializeRepositories();
 
     const orders = await this.orderRepository.getOrders();
 
